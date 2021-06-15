@@ -10,5 +10,9 @@ import static org.hamcrest.Matchers.is;
 @SpringBootTest
 class RentCarApplicationTests {
 
+    @Test
+    void ContextLoads() {
+
+    }
 
 }

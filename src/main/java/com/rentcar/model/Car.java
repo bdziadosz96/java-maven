@@ -1,15 +1,14 @@
-package com.rentcar;
+package com.rentcar.model;
 
 import lombok.AllArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-
+@Entity
+@Table(name = "cars")
 public class Car {
-
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String model;
@@ -27,15 +26,11 @@ public class Car {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
@@ -43,7 +38,7 @@ public class Car {
         return model;
     }
 
-    public void setModel(String model) {
+    void setModel(String model) {
         this.model = model;
     }
 
