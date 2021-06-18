@@ -1,8 +1,13 @@
 package com.rentcar.model;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.criterion.NotNullExpression;
+
 
 @Entity
 @Table(name = "cars")
@@ -10,6 +15,7 @@ public class Car {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "name cannot be null")
     private String name;
     private String model;
 
@@ -45,7 +51,6 @@ public class Car {
     @Override
     public String toString() {
         return "Car{" +
-                "id=" + id +
                 ", name='" + name + '\'' +
                 ", model='" + model + '\'' +
                 '}';
