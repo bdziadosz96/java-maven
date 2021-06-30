@@ -1,0 +1,9 @@
+spring.h2:
+  console:
+    enabled: true
+    path: '/db'
+spring.datasource:
+  url: 'jdbc:h2:file:/Users/bartekmacbook/Desktop/CarSharing-App/app-db'
+  driverClassName: org.h2.Driver
+  username: 'sa'
+  password:
