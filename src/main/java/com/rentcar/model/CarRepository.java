@@ -13,10 +13,13 @@ public interface CarRepository {
 
     Page<Car> findAll(Pageable page);
 
-    List<Car> findAllById(@Param("id") Long id);
+    boolean existsById(Long id);
 
     Optional<Car> findCarByName(String carName);
 
+    Optional<Car> findCarById(Long id);
+
     Optional<Car> findCarByModel(String modelName);
-    
+
+    Car save(Car carToSave);
 }
