@@ -1,9 +1,11 @@
 spring:
+  h2:
+    console:
+      enabled: false
   datasource:
-    url: 'jdbc:h2:file:/Users/bartekmacbook/Desktop/CarSharing-App/app-db'
+    url: 'test' #YOUR ULR TO H2DB
     driverClassName: org.h2.Driver
     username: 'sa'
     password:
   main:
     banner-mode: off
-

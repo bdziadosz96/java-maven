@@ -22,6 +22,7 @@ public class CarConfiguration {
         }
     }
 
+
     public static class Security {
         private String username;
         private String password;
@@ -42,6 +43,7 @@ public class CarConfiguration {
             this.password = password;
         }
     }
+
 
     public Admin getAdmin() {
         return admin;

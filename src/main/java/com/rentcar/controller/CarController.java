@@ -47,11 +47,6 @@ public class CarController {
         return carByID
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
-//        if (carByID.isPresent()) {
-//            return ResponseEntity.ok().body(carByID.get());
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
     }
 
     @PutMapping("/cars/{id}")
