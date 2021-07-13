@@ -4,12 +4,15 @@ spring:
       enabled: true
       path: '/db'
   datasource:
-    url: 'jdbc:h2:mem:testdb'
+    url: 'jdbc:h2:file:C:\Users\Bartek\Desktop\RentCar\car-db'
     driverClassName: org.h2.Driver
     username: 'sa'
     password:
   main:
     banner-mode: off
+  jpa:
+    hibernate:
+      ddl-auto: validate
 car:
   rent-multiple-cars: false
   security:
