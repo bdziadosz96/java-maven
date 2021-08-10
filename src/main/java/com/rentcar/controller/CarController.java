@@ -53,10 +53,10 @@ public class CarController {
         }
         toUpdate.setId(id);
         Car save = repository.save(toUpdate);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/cars/")
+    @PostMapping("/cars")
     ResponseEntity <Car> addCar(@RequestBody @Valid Car toAdd) {
         Car save = repository.save(toAdd);
         return ResponseEntity.created(URI.create("/" + save.getId())).body(save);
