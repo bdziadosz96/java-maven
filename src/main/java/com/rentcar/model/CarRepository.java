@@ -22,4 +22,5 @@ public interface CarRepository {
     Optional<Car> findCarByModel(String modelName);
 
     Car save(Car carToSave);
+
 }

@@ -8,7 +8,8 @@ import java.util.List;
 
 
 @Repository
-interface SQLCarRepository extends CarRepository, JpaRepository<Car, Long> {
+
+public interface SQLCarRepository extends CarRepository, JpaRepository<Car, Long> {
 
 }
 
