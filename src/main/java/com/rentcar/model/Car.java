@@ -5,22 +5,27 @@ import javax.validation.constraints.NotBlank;
 
 
 @Entity
+
 @Table(name = "cars")
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "name cannot be null")
-    private String name;
-    private String model;
 
+    @NotBlank(message = "name cannot b  e null")
+    private String name;
+    @NotBlank(message = "model cannot be blank")
+    private String model;
+    @Embedded
+    private final Audit audit = new Audit();
+
+
+    public Car() {
+    }
 
     public Car(String name, String model) {
         this.name = name;
         this.model = model;
-    }
-
-    public Car() {
     }
 
     public void setId(Long id) {
@@ -54,4 +59,11 @@ public class Car {
                 ", model='" + model + '\'' +
                 '}';
     }
+
+    public void updateFrom(final Car source) {
+        model = source.model;
+        name = source.name;
+    }
+
+
 }

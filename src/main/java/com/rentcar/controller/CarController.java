@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
@@ -46,22 +47,26 @@ public class CarController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @Transactional
     @PutMapping("/cars/{id}")
     ResponseEntity <?> updateCar(@PathVariable Long id, @RequestBody @Valid Car toUpdate) {
         if (!repository.existsById(id)) {
             return new ResponseEntity<>("ID not found", HttpStatus.NOT_FOUND);
         }
-        toUpdate.setId(id);
-        Car save = repository.save(toUpdate);
+        repository.findCarById(id)
+                .ifPresent(car -> {
+                    car.updateFrom(toUpdate);
+                    repository.save(car);
+                });
         return ResponseEntity.ok().build();
     }
 
+    @Transactional
     @PostMapping("/cars")
     ResponseEntity <Car> addCar(@RequestBody @Valid Car toAdd) {
         Car save = repository.save(toAdd);
         return ResponseEntity.created(URI.create("/" + save.getId())).body(save);
     }
-
 
 
 }

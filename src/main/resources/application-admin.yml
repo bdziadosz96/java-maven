@@ -12,11 +12,12 @@ spring:
     banner-mode: off
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
+    show-sql: true
 car:
   rent-multiple-cars: false
   security:
     username: 'tomek'
     password: 'atomek'
   admin:
-    online: false
+     online: false

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
@@ -30,10 +31,22 @@ public class UserController {
         return repository.findAll();
     }
 
-    @PostMapping("/adduser")
+    @PostMapping("/add/user")
     ResponseEntity <?> addUser(@RequestBody @Valid User userToAdd) {
         final User save = repository.save(userToAdd);
         return ResponseEntity.created(URI.create("/" + save.getId())).body(save);
+    }
+
+    @Transactional
+    @DeleteMapping("/delete/user/{id}")
+    ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        if (repository.findById(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        else {
+            repository.delete(repository.findById(id).get());
+            return ResponseEntity.ok().build();
+        }
     }
 
 
