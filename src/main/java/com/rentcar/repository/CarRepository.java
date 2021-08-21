@@ -1,9 +1,8 @@
-package com.rentcar.model;
+package com.rentcar.repository;
 
+import com.rentcar.model.Car;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,5 +21,4 @@ public interface CarRepository {
     Optional<Car> findCarByModel(String modelName);
 
     Car save(Car carToSave);
-
 }

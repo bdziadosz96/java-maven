@@ -7,41 +7,39 @@ import javax.validation.constraints.NotBlank;
 @Entity
 
 @Table(name = "cars")
-public class Car {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Car extends AbstractEntity{
 
-    @NotBlank(message = "name cannot b  e null")
-    private String name;
     @NotBlank(message = "model cannot be blank")
     private String model;
-    @Embedded
-    private final Audit audit = new Audit();
+
+    @ManyToOne
+    @JoinColumn(name = "leasing_id")
+    private Leasing leasing;
 
 
     public Car() {
     }
 
-    public Car(String name, String model) {
-        this.name = name;
+    public Car(final String model) {
+        super();
         this.model = model;
+       }
+
+
+    Leasing getLeasing() {
+        return leasing;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
+    void setLeasing(final Leasing leasing) {
+        this.leasing = leasing;
     }
 
     public String getName() {
-        return name;
+        return super.getName();
     }
 
-    void setName(String name) {
-        this.name = name;
+    public Long getId() {
+        return super.getId();
     }
 
     public String getModel() {
@@ -52,18 +50,15 @@ public class Car {
         this.model = model;
     }
 
-    @Override
-    public String toString() {
-        return "Car{" +
-                ", name='" + name + '\'' +
-                ", model='" + model + '\'' +
-                '}';
-    }
 
     public void updateFrom(final Car source) {
         model = source.model;
-        name = source.name;
+        super.setName(source.getName());
     }
 
-
+    @Override
+    public String toString() {
+        return "Car{" +
+                "model='" + model;
+    }
 }

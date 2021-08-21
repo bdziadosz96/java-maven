@@ -12,8 +12,9 @@ spring:
     banner-mode: off
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create-drop
     show-sql: true
+    generate-ddl: false
 car:
   rent-multiple-cars: false
   security:
@@ -21,3 +22,6 @@ car:
     password: 'atomek'
   admin:
      online: false
+logging:
+  pattern:
+    console=: '%d{HH:mm:ss} %-5level %logger{1} - %msg%n'

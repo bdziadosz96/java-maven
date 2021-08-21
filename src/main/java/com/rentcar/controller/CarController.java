@@ -1,7 +1,7 @@
 package com.rentcar.controller;
 
 import com.rentcar.model.Car;
-import com.rentcar.model.CarRepository;
+import com.rentcar.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +29,7 @@ public class CarController {
 
     @GetMapping(value = "/cars", params = {"!sort", "!page", "!size"})
     ResponseEntity<List<Car>> readAllCars() {
-        logger.warning("Finding all cars");
+        logger.warning("Exposing all the cars");
         return ResponseEntity.ok(repository.findAll());
     }
 
@@ -41,6 +41,7 @@ public class CarController {
 
     @GetMapping("/cars/{id}")
     ResponseEntity<?> readCarById(@PathVariable Long id) {
+        logger.warning("Reading car by " + id);
         Optional<Car> carByID = repository.findCarById(id);
         return carByID
                 .map(ResponseEntity::ok)
@@ -50,11 +51,13 @@ public class CarController {
     @Transactional
     @PutMapping("/cars/{id}")
     ResponseEntity<?> updateCar(@PathVariable Long id, @RequestBody @Valid Car toUpdate) {
+        logger.info("PUT : Update car " + id + " with " + toUpdate.toString());
         return findCarById(id, toUpdate);
     }
 
     @PatchMapping("/cars/{id}")
     ResponseEntity<?> updateCarByPatch(@PathVariable Long id, @RequestBody @Valid Car toUpdate) {
+        logger.info("PATCH : Update car " + id + " with " + toUpdate.toString());
         return findCarById(id, toUpdate);
     }
 
@@ -73,6 +76,7 @@ public class CarController {
     @Transactional
     @PostMapping("/cars")
     ResponseEntity<Car> addCar(@RequestBody @Valid Car toAdd) {
+        logger.warning("Add new car to database");
         Car save = repository.save(toAdd);
         return ResponseEntity.created(URI.create("/" + save.getId())).body(save);
     }

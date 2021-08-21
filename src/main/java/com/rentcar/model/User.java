@@ -3,57 +3,66 @@ package com.rentcar.model;
 
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "users")
 @Setter
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
+public class User extends AbstractEntity {
+
+    @NotBlank
     private String surname;
 
     public User(String name,String surname) {
-        this.name = name;
+        super.setName(name);
         this.surname = surname;
     }
+    @OneToOne(mappedBy = "user")
+    private Leasing leasing;
 
     public User() {
     }
 
     public Long getId() {
-        return id;
+        return super.getId();
     }
 
     public String getName() {
-        return name;
+        return super.getName();
     }
 
     public String getSurname() {
         return surname;
     }
 
+    void setSurname(final String surname) {
+        this.surname = surname;
+    }
+
+    Leasing getLeasing() {
+        return leasing;
+    }
+
+    void setLeasing(final Leasing leasing) {
+        this.leasing = leasing;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                ", name='" + name + '\'' +
+                ", name='" + super.getName() + '\'' +
                 ", surname='" + surname + '\'' +
                 '}';
+
+
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        final User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(surname, user.surname);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, surname);
+    public void updateFrom(User source) {
+        super.setName(source.getName());
+        surname = source.getSurname();
     }
 }

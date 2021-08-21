@@ -3,10 +3,9 @@ package com.rentcar.controller;
 
 
 import com.rentcar.model.User;
-import com.rentcar.model.UserRepository;
+import com.rentcar.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -26,13 +25,13 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    List <User> all() {
+    List<User> all() {
         logger.info("Finding all users");
         return repository.findAll();
     }
 
     @PostMapping("/add/user")
-    ResponseEntity <?> addUser(@RequestBody @Valid User userToAdd) {
+    ResponseEntity<?> addUser(@RequestBody @Valid User userToAdd) {
         final User save = repository.save(userToAdd);
         return ResponseEntity.created(URI.create("/" + save.getId())).body(save);
     }
@@ -42,12 +41,22 @@ public class UserController {
     ResponseEntity<?> deleteUser(@PathVariable Long id) {
         if (repository.findById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
-        }
-        else {
+        } else {
             repository.delete(repository.findById(id).get());
             return ResponseEntity.ok().build();
         }
     }
 
-
+    @PatchMapping("/update/user/{id}")
+    ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User userToUpdate) {
+        if (repository.findById(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            final User user = repository.findById(id).get();
+            user.updateFrom(userToUpdate);
+            repository.save(user);
+            return ResponseEntity.ok().build();
+        }
+    }
 }
+
